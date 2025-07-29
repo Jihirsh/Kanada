@@ -44,7 +44,7 @@ function AppSidebar() {
   return (
     <Sidebar>
       <SidebarHeader className="bg-accent flex items-center p-5">
-        <Image src={"/logo.png"} alt="logo" width={180} height={140} />
+        <Image src={"/logo.png"} alt="logo" width={180} height={140} style={{ width: "auto", height: "auto" }} />
       </SidebarHeader>
       <SidebarContent className="bg-accent">
         <SidebarGroup>
