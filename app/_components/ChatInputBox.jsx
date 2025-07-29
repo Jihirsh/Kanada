@@ -8,7 +8,7 @@ import {
   Globe,
   Mic,
   Paperclip,
-  SearchCheck,
+  SearchCode,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -23,7 +23,7 @@ import {
 function ChatInputBox() {
   return (
     <div className="flex flex-col h-screen items-center justify-center w-full">
-      <Image src={"/logo2.png"} alt="logo" height={260} width={260} style={{ width: "auto", height: "auto" }} />
+      <Image src={"/kanadalogo.png"} alt="logo" height={260} width={260} style={{ width: "auto", height: "auto" }} />
       <div className="p-2 w-full max-w-2xl border rounded-2xl mt-10">
         <div className="flex justify-between items-end">
           <Tabs defaultValue="Search" className="w-[400px]">
@@ -44,7 +44,7 @@ function ChatInputBox() {
             <TabsList>
               <TabsTrigger value="Search" className={"text-primary"}>
                 {" "}
-                <SearchCheck /> Search
+                <SearchCode /> Search
               </TabsTrigger>
               <TabsTrigger value="Research" className={"text-primary"}>
                 {" "}

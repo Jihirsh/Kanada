@@ -11,14 +11,14 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import Image from "next/image";
-import { Compass, GalleryHorizontalEnd, LogIn, Search } from "lucide-react";
+import { Compass, DraftingCompass, LibraryBig, PenSquare } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
 
 const MenuOptions = [
   {
-    title: "Home",
-    icon: Search,
+    title: "Chat",
+    icon: PenSquare,
     path: "/",
   },
   {
@@ -28,12 +28,12 @@ const MenuOptions = [
   },
   {
     title: "Library",
-    icon: GalleryHorizontalEnd,
+    icon: LibraryBig,
     path: "/library",
   },
   {
-    title: "Sign In",
-    icon: LogIn,
+    title: "Quizzes",
+    icon: DraftingCompass,
     path: "#",
   },
 ];
@@ -42,9 +42,9 @@ function AppSidebar() {
   const path = usePathname();
 
   return (
-    <Sidebar>
+    <Sidebar collapsible="icon">
       <SidebarHeader className="bg-accent flex items-center p-5">
-        <Image src={"/logo.png"} alt="logo" width={180} height={140} style={{ width: "auto", height: "auto" }} />
+        <Image src={"/kanadalogo.png"} alt="logo" width={180} height={100} style={{ width: "auto", height: "auto" }} />
       </SidebarHeader>
       <SidebarContent className="bg-accent">
         <SidebarGroup>
@@ -54,8 +54,8 @@ function AppSidebar() {
                 <SidebarMenuItem key={index}>
                   <SidebarMenuButton
                     asChild
-                    className={`p-5 py-6 hover:bg-transparent hover:font-medium 
-                    ${path?.includes(menu.path) && "font-medium"}`}
+                    className={`p-4 py-6 hover:bg-transparent hover:font-medium 
+                    ${path?.includes(menu.path) && "font-semibold"}`}
                   >
                     <a href={menu.path} className="">
                       <menu.icon className="h-8 w-8" />
@@ -66,7 +66,7 @@ function AppSidebar() {
               ))}
             </SidebarMenu>
 
-            <Button className="rounded-full mx-4 mt-4">Sign Up</Button>
+            <Button className="rounded-full mx-4 mt-4">Log In / Sign Up</Button>
           </SidebarContent>
         </SidebarGroup>
         <SidebarGroup />
