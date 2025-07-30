@@ -11,7 +11,13 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import Image from "next/image";
-import { Compass, DraftingCompass, LibraryBig, PenSquare } from "lucide-react";
+import {
+  Compass,
+  DraftingCompass,
+  LibraryBig,
+  Orbit,
+  PenSquare,
+} from "lucide-react";
 import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
 
@@ -44,7 +50,8 @@ function AppSidebar() {
   return (
     <Sidebar collapsible="icon">
       <SidebarHeader className="bg-accent flex items-center p-5">
-        <Image src={"/kanadalogo.png"} alt="logo" width={180} height={100} style={{ width: "auto", height: "auto" }} />
+        <Orbit className="flex" height={40} width={40} />
+        {/* <Image src={"/kanadalogo.png"} alt="logo" width={180} height={100} style={{ width: "auto", height: "auto" }} /> */}
       </SidebarHeader>
       <SidebarContent className="bg-accent">
         <SidebarGroup>
@@ -58,7 +65,7 @@ function AppSidebar() {
                     ${path?.includes(menu.path) && "font-semibold"}`}
                   >
                     <a href={menu.path} className="">
-                      <menu.icon className="h-8 w-8" />
+                      <menu.icon className="h-10 w-10" />
                       <span className="text-lg">{menu.title}</span>
                     </a>
                   </SidebarMenuButton>
@@ -66,7 +73,9 @@ function AppSidebar() {
               ))}
             </SidebarMenu>
 
-            <Button className="rounded-full mx-4 mt-4">Log In / Sign Up</Button>
+            <Button className="rounded-full mx-4 mt-4 group-data-[collapsible=icon]:hidden">
+              Log In / Sign Up
+            </Button>
           </SidebarContent>
         </SidebarGroup>
         <SidebarGroup />

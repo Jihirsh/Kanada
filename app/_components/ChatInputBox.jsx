@@ -24,7 +24,8 @@ function ChatInputBox() {
   return (
     <div className="flex flex-col h-screen items-center justify-center w-full">
       <Image src={"/kanadalogo.png"} alt="logo" height={260} width={260} style={{ width: "auto", height: "auto" }} />
-      <div className="p-2 w-full max-w-2xl border rounded-2xl mt-10">
+      <p className="p-4 font-semibold opacity-60">Your AI-powered physics companion for learning, problem-solving, and exploration</p>
+      <div className="p-2 w-full max-w-2xl border rounded-2xl mt-5">
         <div className="flex justify-between items-end">
           <Tabs defaultValue="Search" className="w-[400px]">
             <TabsContent value="Search">
