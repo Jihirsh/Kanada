@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/sidebar";
 import Image from "next/image";
 import {
+  AlarmClockCheck,
   Compass,
   DraftingCompass,
   LibraryBig,
@@ -40,7 +41,12 @@ const MenuOptions = [
   {
     title: "Quizzes",
     icon: DraftingCompass,
-    path: "#",
+    path: "/quizzes",
+  },
+  {
+    title: "Pomodoro",
+    icon: AlarmClockCheck,
+    path: "/pomodoro",
   },
 ];
 
@@ -65,7 +71,7 @@ function AppSidebar() {
                     ${path?.includes(menu.path) && "font-semibold"}`}
                   >
                     <a href={menu.path} className="">
-                      <menu.icon className="h-10 w-10" />
+                      <menu.icon className="h-8 w-8" />
                       <span className="text-lg">{menu.title}</span>
                     </a>
                   </SidebarMenuButton>
@@ -74,7 +80,7 @@ function AppSidebar() {
             </SidebarMenu>
 
             <Button className="rounded-full mx-4 mt-4 group-data-[collapsible=icon]:hidden">
-              Log In / Sign Up
+              Log In
             </Button>
           </SidebarContent>
         </SidebarGroup>

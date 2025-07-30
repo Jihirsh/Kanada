@@ -14,7 +14,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "Kaṇāda",
+  title: "Kaṇāda - Your AI Physics Companion",
+  icon: "favicon.ico",
   description: "Made by Jihirsh",
 };
 
