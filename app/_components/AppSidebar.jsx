@@ -57,7 +57,7 @@ function AppSidebar() {
   return (
     <Sidebar collapsible="icon">
       <SidebarHeader className="bg-accent flex items-center p-5">
-        <Orbit className="flex" height={40} width={40} />
+        <Orbit height={40} width={40} />
         {/* <Image src={"/kanadalogo.png"} alt="logo" width={180} height={100} style={{ width: "auto", height: "auto" }} /> */}
       </SidebarHeader>
       <SidebarContent className="bg-accent">
