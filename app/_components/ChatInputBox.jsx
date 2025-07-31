@@ -4,11 +4,11 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   Atom,
   AudioLines,
+  ChartSpline,
   Cpu,
-  Globe,
-  Mic,
   Paperclip,
   SearchCode,
+  SquareRadical,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -69,13 +69,13 @@ function ChatInputBox() {
               </DropdownMenuContent>
             </DropdownMenu>
             <Button variant="ghost">
-              <Globe className="text-gray-500 h-5 w-5" />
+              <ChartSpline className="text-gray-500 h-5 w-5" />
+            </Button>
+            <Button variant="ghost">
+              <SquareRadical className="text-gray-500 h-5 w-5" />
             </Button>
             <Button variant="ghost">
               <Paperclip className="text-gray-500 h-5 w-5" />
-            </Button>
-            <Button variant="ghost">
-              <Mic className="text-gray-500 h-5 w-5" />
             </Button>
             <Button>
               <AudioLines className="text-white h-5 w-5" />
