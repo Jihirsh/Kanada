@@ -42,7 +42,7 @@ function QuickTopics() {
             className="w-1/4 p-2 flex items-center justify-center"
           >
             <CardContent className="flex flex-col items-center text-center p-2">
-              <div className="p-2">
+              <div className="p-2 text-primary">
                 <topic.icon />
               </div>
               <CardTitle className="p-2">{topic.name}</CardTitle>
@@ -51,6 +51,7 @@ function QuickTopics() {
           </Card>
         ))}
       </div>
+      <p className="p-5 text-shadow-3xs opacity-60">Start by typing a question above or click on any topic</p>
     </div>
   );
 }
