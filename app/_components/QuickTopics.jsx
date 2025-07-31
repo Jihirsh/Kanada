@@ -34,7 +34,7 @@ function QuickTopics() {
 
   return (
     <div className="flex flex-col items-center">
-      <h2 className="text-2xl font-bold mb-4">Quick Topics</h2>
+      <h2 className="text-2xl font-bold mb-4 opacity-80">Quick Topics</h2>
       <div className="flex justify-around w-full max-w-4xl gap-5">
         {quickTopics.map((topic) => (
           <Card
