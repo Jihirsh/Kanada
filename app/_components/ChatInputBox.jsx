@@ -1,7 +1,9 @@
+"use client";
 import Image from "next/image";
-import React from "react";
+import React, { useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
+  ArrowRight,
   Atom,
   AudioLines,
   ChartSpline,
@@ -19,12 +21,36 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { v4 as uuidv4} from "uuid";
+import { useRouter } from "next/navigation";
 
 function ChatInputBox() {
+  const [userSearchInput, setUserSearchInput] = useState();
+  const [searchType, setSearchType] = useState("search");
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
+
+  const onSearchQuery = () => {
+    setLoading(true);
+    const libId = uuidv4();
+    setLoading(false);
+
+    router.push("/search/" + libId);
+  };
+
   return (
     <div className="flex flex-col items-center justify-center w-full">
-      <Image src={"/kanadalogo.png"} alt="logo" height={260} width={260} style={{ width: "auto", height: "auto" }} />
-      <p className="p-4 font-semibold opacity-60">Your AI-powered physics companion for learning, problem-solving, and exploration</p>
+      <Image
+        src={"/kanadalogo.png"}
+        alt="logo"
+        height={260}
+        width={260}
+        style={{ width: "auto", height: "auto" }}
+      />
+      <p className="p-4 font-semibold opacity-60">
+        Your AI-powered physics companion for learning, problem-solving, and
+        exploration
+      </p>
       <div className="p-2 w-full max-w-2xl border rounded-2xl mt-5">
         <div className="flex justify-between items-end">
           <Tabs defaultValue="Search" className="w-[400px]">
@@ -33,6 +59,7 @@ function ChatInputBox() {
                 type="text"
                 placeholder="Ask Anything"
                 className="w-full p-4 outline-none"
+                onChange={(e) => setUserSearchInput(e.target.value)}
               />
             </TabsContent>
             <TabsContent value="Research">
@@ -40,15 +67,22 @@ function ChatInputBox() {
                 type="text"
                 placeholder="Research Anything"
                 className="w-full p-4 outline-none"
+                onChange={(e) => setUserSearchInput(e.target.value)}
               />
             </TabsContent>
             <TabsList>
-              <TabsTrigger value="Search" className={"text-primary"}>
-                {" "}
+              <TabsTrigger
+                value="Search"
+                className={"text-primary"}
+                onClick={() => setSearchType("search")}
+              >
                 <SearchCode /> Search
               </TabsTrigger>
-              <TabsTrigger value="Research" className={"text-primary"}>
-                {" "}
+              <TabsTrigger
+                value="Research"
+                className={"text-primary"}
+                onClick={() => setSearchType("research")}
+              >
                 <Atom /> Research
               </TabsTrigger>
             </TabsList>
@@ -77,8 +111,16 @@ function ChatInputBox() {
             <Button variant="ghost">
               <Paperclip className="text-gray-500 h-5 w-5" />
             </Button>
-            <Button>
-              <AudioLines className="text-white h-5 w-5" />
+            <Button
+              onClick={() => {
+                userSearchInput ? onSearchQuery() : null;
+              }}
+            >
+              {!userSearchInput ? (
+                <AudioLines className="text-white h-5 w-5" />
+              ) : (
+                <ArrowRight className="text-white h-5 w-5" disabled={loading} />
+              )}
             </Button>
           </div>
         </div>
