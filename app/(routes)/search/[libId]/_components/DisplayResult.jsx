@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   LucideImage,
   LucideList,
@@ -6,6 +6,7 @@ import {
   LucideVideo,
 } from "lucide-react";
 import AnswerDisplay from "./AnswerDisplay";
+import axios from "axios";
 
 const tabs = [
   { label: "Answer", icon: LucideSparkles },
@@ -16,6 +17,21 @@ const tabs = [
 
 function DisplayResult({ searchInputRecord }) {
   const [activeTab, setActiveTab] = useState("Answer");
+
+  useEffect(()=>{
+    //Update this method later
+    searchInputRecord&&GetSearchApiResult();
+  }, [searchInputRecord])
+
+
+  const GetSearchApiResult=async()=>{
+    const result = await axios.post('/api/brave-search-api',{
+      searchInput:searchInputRecord?.searchInput,
+      searchType:searchInputRecord?.type
+    });
+    console.log(result.data);
+    console.log(JSON.stringify(result.data));
+  }
 
   return (
     <div className="mt-7">
