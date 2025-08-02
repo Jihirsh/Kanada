@@ -5,6 +5,7 @@ import {
   LucideSparkles,
   LucideVideo,
 } from "lucide-react";
+import AnswerDisplay from "./AnswerDisplay";
 
 const tabs = [
   { label: "Answer", icon: LucideSparkles },
@@ -19,7 +20,7 @@ function DisplayResult({ searchInputRecord }) {
   return (
     <div className="mt-7">
       {/* {searchInputRecord?.searchInput} instead of Response */}
-      <h2 className="font-medium text-3xl line-clamp-2">Response</h2>
+      <h2 className="font-medium text-3xl line-clamp-2 mb-2">Response</h2>
       <div className="flex items-center space-x-6 border-b border-gray-200 pb-2 mt-6">
         {tabs.map(({ label, icon: Icon, badge }) => (
           <button
@@ -37,14 +38,13 @@ function DisplayResult({ searchInputRecord }) {
               </span>
             )}
             {activeTab === label && (
-              <span className="absolute bottom-0.5 left-0 w-full h-0.5 bg-black rounded"></span>
+              <span className="absolute bottom-0 left-0 w-full h-0.5 bg-black rounded"></span>
             )}
           </button>
         ))}
       </div>
-      <div className="ml-auto text-sm text-gray-500">
-        1 task <span className="ml-1"></span>
-      </div>
+
+      <div>{activeTab == "Answer" ? <AnswerDisplay /> : null}</div>
     </div>
   );
 }
