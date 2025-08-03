@@ -39,7 +39,7 @@ function QuickTopics() {
         {quickTopics.map((topic) => (
           <Card
             key={topic.name}
-            className="w-1/4 p-2 flex items-center justify-center"
+            className="w-1/4 p-2 flex items-center justify-center cursor-pointer hover:scale-105 transition-transform duration-200"
           >
             <CardContent className="flex flex-col items-center text-center p-2">
               <div className="p-2 text-primary">
@@ -51,7 +51,9 @@ function QuickTopics() {
           </Card>
         ))}
       </div>
-      <p className="p-5 text-shadow-3xs opacity-60">Start by typing a question above or click on any topic</p>
+      <p className="p-5 text-shadow-3xs opacity-60">
+        Start by typing a question above or click on any topic
+      </p>
     </div>
   );
 }

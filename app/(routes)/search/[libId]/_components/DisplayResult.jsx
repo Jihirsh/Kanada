@@ -17,21 +17,21 @@ const tabs = [
 
 function DisplayResult({ searchInputRecord }) {
   const [activeTab, setActiveTab] = useState("Answer");
+  const [searchResult, setSearchResult] = useState();
 
-  useEffect(()=>{
+  useEffect(() => {
     //Update this method later
-    searchInputRecord&&GetSearchApiResult();
-  }, [searchInputRecord])
+    searchInputRecord && GetSearchApiResult();
+  }, [searchInputRecord]);
 
-
-  const GetSearchApiResult=async()=>{
-    const result = await axios.post('/api/brave-search-api',{
-      searchInput:searchInputRecord?.searchInput,
-      searchType:searchInputRecord?.type
+  const GetSearchApiResult = async () => {
+    const result = await axios.post("/api/brave-search-api", {
+      searchInput: searchInputRecord?.searchInput,
+      searchType: searchInputRecord?.type,
     });
     console.log(result.data);
     console.log(JSON.stringify(result.data));
-  }
+  };
 
   return (
     <div className="mt-7">
