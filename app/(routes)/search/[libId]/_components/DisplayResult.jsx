@@ -36,7 +36,7 @@ function DisplayResult({ searchInputRecord }) {
   return (
     <div className="mt-7">
       {/* {searchInputRecord?.searchInput} instead of Response */}
-      <h2 className="font-medium text-3xl line-clamp-2 mb-2">Response</h2>
+      <h2 className="font-medium text-3xl line-clamp-2 mb-2">Responses</h2>
       <div className="flex items-center space-x-6 border-b border-gray-200 pb-2 mt-6">
         {tabs.map(({ label, icon: Icon, badge }) => (
           <button
