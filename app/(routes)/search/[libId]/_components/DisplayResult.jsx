@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import {
   LucideImage,
   LucideList,
@@ -6,7 +6,7 @@ import {
   LucideVideo,
 } from "lucide-react";
 import AnswerDisplay from "./AnswerDisplay";
-import axios from "axios";
+import PropTypes from "prop-types";
 
 const tabs = [
   { label: "Answer", icon: LucideSparkles },
@@ -17,25 +17,58 @@ const tabs = [
 
 function DisplayResult({ searchInputRecord }) {
   const [activeTab, setActiveTab] = useState("Answer");
-  const [searchResult, setSearchResult] = useState();
-
-  useEffect(() => {
-    //Update this method later
-    searchInputRecord && GetSearchApiResult();
-  }, [searchInputRecord]);
+  const [searchResult, setSearchResult] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   const GetSearchApiResult = async () => {
-    const result = await axios.post("/api/brave-search-api", {
-      searchInput: searchInputRecord?.searchInput,
-      searchType: searchInputRecord?.type,
-    });
-    console.log(result.data);
-    console.log(JSON.stringify(result.data));
+    if (!searchInputRecord?.searchInput || !searchInputRecord?.type) {
+      console.warn("Missing search input or type");
+      setError("Missing search input or type");
+      return;
+    }
+
+    setIsLoading(true);
+    setError(null);
+
+    try {
+      const response = await fetch("/api/brave-search-api", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          searchInput: searchInputRecord.searchInput,
+          searchType: searchInputRecord.type,
+        }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        if (response.status === 429) {
+          throw new Error("Rate limit exceeded. Please try again later.");
+        }
+        throw new Error(errorData.details || `HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      setSearchResult(data);
+      console.log("API Response:", data);
+      console.log("Stringified Response:", JSON.stringify(data));
+    } catch (err) {
+      console.error("API Error:", err);
+      setError(err.message || "Failed to fetch search results");
+    } finally {
+      setIsLoading(false);
+    }
   };
+
+  useEffect(() => {
+    GetSearchApiResult();
+  }, [searchInputRecord]);
 
   return (
     <div className="mt-7">
-      {/* {searchInputRecord?.searchInput} instead of Response */}
       <h2 className="font-medium text-3xl line-clamp-2 mb-2">Responses</h2>
       <div className="flex items-center space-x-6 border-b border-gray-200 pb-2 mt-6">
         {tabs.map(({ label, icon: Icon, badge }) => (
@@ -60,9 +93,25 @@ function DisplayResult({ searchInputRecord }) {
         ))}
       </div>
 
-      <div>{activeTab == "Answer" ? <AnswerDisplay /> : null}</div>
+      <div className="mt-4">
+        {isLoading && <p>Loading...</p>}
+        {error && <p className="text-red-500">{error}</p>}
+        {activeTab === "Answer" && searchResult && (
+          <AnswerDisplay searchResult={searchResult} />
+        )}
+        {activeTab === "Images" && <div>Images content placeholder</div>}
+        {activeTab === "Videos" && <div>Videos content placeholder</div>}
+        {activeTab === "Sources" && <div>Sources content placeholder</div>}
+      </div>
     </div>
   );
 }
+
+DisplayResult.propTypes = {
+  searchInputRecord: PropTypes.shape({
+    searchInput: PropTypes.string,
+    type: PropTypes.string,
+  }),
+};
 
 export default DisplayResult;
