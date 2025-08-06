@@ -1,15 +1,5 @@
 import { Atom, Calculator, Eye, Telescope, Waves, Zap } from "lucide-react";
 import React from "react";
-import {
-  Card,
-  CardAction,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 
 const courses = [
   {
