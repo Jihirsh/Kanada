@@ -1,5 +1,10 @@
 import { Atom, Calculator, Eye, Telescope, Waves, Zap } from "lucide-react";
 import React from "react";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip"
 
 const courses = [
   {
@@ -95,7 +100,7 @@ const CourseCard = ({ course }) => {
   } = course;
 
   return (
-    <div className="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden hover:shadow-xl transition-shadow duration-300 group">
+    <div className="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden hover:shadow-xl transition-shadow duration-300 group max-w-md">
       {/* Header with gradient background */}
       <div
         className={`bg-gradient-to-r ${color} p-6 text-white relative overflow-hidden`}
@@ -168,26 +173,40 @@ const CourseCard = ({ course }) => {
 function Discover() {
   return (
     <div className="flex flex-col items-center justify-center p-6 bg-white">
-      <h1 className="text-4xl font-bold text-gray-900 mb-4">Master Physics</h1>
-      <p className="text-center text-gray-600 mb-8 max-w-2xl">
+      <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-4 mt-20">
+        Master Physics
+      </h1>
+      <p className="text-xl text-center text-gray-600 mb-8 max-w-3xl mx-auto leading-relaxed">
         Explore the fundamental laws that govern our universe. From quantum
         mechanics to classical physics, build a deep understanding through
         structured learning paths and interactive content.
       </p>
       <div className="flex justify-center gap-4 mb-8">
-        <button className="px-6 py-2 bg-black text-white rounded-lg">Start Learning</button>
-        <button className="px-6 py-2 bg-gray-100 text-gray-600 rounded-lg">Explore Courses</button>
+        <button className="px-8 py-4 font-semibold bg-black text-white rounded-lg">
+          Start Learning
+        </button>
+        <button className="border-2 border-gray-300 px-8 py-4 font-semibold bg-gray-100 text-gray-600 rounded-lg">
+          Explore Resources
+        </button>
       </div>
-      <h2 className="text-2xl font-bold text-gray-900 mb-4">Discover Physics</h2>
-      <p className="text-center text-gray-600 mb-8 max-w-2xl">
-        Choose your learning path and dive deep into the fascinating world of
-        physics. Each course is carefully structured to build your understanding
-        progressively.
-      </p>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {courses.map((course) => (
-          <CourseCard key={course.id} course={course} />
-        ))}
+
+      <div className="flex flex-col items-center justify-center mt-25">
+        <h2 className="text-4xl font-bold text-gray-900 mb-4">
+          Discover Physics
+        </h2>
+        <p className="text-lg text-center text-gray-600 max-w-2xl mb-10">
+          Choose your learning path and dive deep into the fascinating world of
+          physics. Each course is carefully structured to build your
+          understanding progressively.
+        </p>
+      </div>
+
+      <div className="max-w-7xl">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-15">
+          {courses.map((course) => (
+            <CourseCard key={course.id} course={course} />
+          ))}
+        </div>
       </div>
     </div>
   );

@@ -3,7 +3,9 @@ import Discover from './_components/Discover'
 
 function page() {
   return (
-    <Discover />
+    <div className="flex items-center justify-center w-full">
+        <Discover />
+    </div>
   )
 }
 
