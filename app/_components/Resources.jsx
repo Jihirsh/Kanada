@@ -1,9 +1,15 @@
-"use client"
+"use client";
+import { Atom, Calculator, CirclePlay, FileTextIcon, Rocket, Thermometer, Wrench } from "lucide-react";
 import React, { useState } from "react";
 
 // Placeholder for FileText icon (replace with your actual icon component, e.g., from react-icons)
 const FileText = ({ className }) => (
-  <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+  <svg
+    className={className}
+    fill="none"
+    viewBox="0 0 24 24"
+    stroke="currentColor"
+  >
     <path
       strokeLinecap="round"
       strokeLinejoin="round"
@@ -17,14 +23,13 @@ const FileText = ({ className }) => (
 const ResourceFilters = ({ activeFilter, onFilterChange }) => {
   const filters = [
     { value: "all", label: "All" },
-    { value: "pdf", label: "PDFs" },
-    { value: "youtube", label: "Videos" },
-    { value: "mechanics", label: "Mechanics" },
-    { value: "quantum", label: "Quantum" },
-    { value: "electromagnetism", label: "Electromagnetism" },
-    { value: "thermodynamics", label: "Thermodynamics" },
-    { value: "modern", label: "Modern Physics" },
-    { value: "mathematics", label: "Mathematics" },
+    { value: "pdf", icon: FileTextIcon, label: "PDFs" },
+    { value: "youtube", icon: CirclePlay, label: "Videos" },
+    { value: "mechanics", icon: Wrench, label: "Mechanics" },
+    { value: "quantum", icon: Atom, label: "Quantum" },
+    { value: "thermodynamics", icon: Thermometer, label: "Thermodynamics" },
+    { value: "modern", icon: Rocket, label: "Modern Physics" },
+    { value: "mathematics", icon: Calculator, label: "Mathematics" },
   ];
 
   return (
@@ -33,13 +38,24 @@ const ResourceFilters = ({ activeFilter, onFilterChange }) => {
         <button
           key={filter.value}
           onClick={() => onFilterChange(filter.value)}
-          className={`px-4 py-2 rounded-full text-sm font-medium ${
+          className={`px-4 py-2 rounded-md text-sm font-medium ${
             activeFilter === filter.value
               ? "bg-black text-white"
-              : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+              : "text-black hover:bg-gray-200"
           }`}
         >
-          {filter.label}
+          <div className="flex">
+            {filter.icon && (
+              <span className="mr-2 inline-flex items-center">
+                <filter.icon className="w-5 h-5" /> {/* Style the icon */}
+              </span>
+            )}
+            <span className="font-semibold">
+              {" "}
+              {/* Style the label */}
+              {filter.label}
+            </span>
+          </div>
         </button>
       ))}
     </div>
@@ -49,9 +65,13 @@ const ResourceFilters = ({ activeFilter, onFilterChange }) => {
 // ResourceCard component
 const ResourceCard = ({ resource }) => (
   <div className="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-lg transition-shadow">
-    <h3 className="text-lg font-semibold text-gray-900 mb-2">{resource.title}</h3>
+    <h3 className="text-lg font-semibold text-gray-900 mb-2">
+      {resource.title}
+    </h3>
     <p className="text-sm text-gray-500 mb-2">
-      {resource.type === "pdf" ? `PDF • ${resource.pages} pages` : `Video • ${resource.duration}`}
+      {resource.type === "pdf"
+        ? `PDF • ${resource.pages} pages`
+        : `Video • ${resource.duration}`}
     </p>
     <p className="text-gray-600 mb-4">{resource.description}</p>
     <p className="text-sm text-gray-500 mb-4">By {resource.author}</p>
