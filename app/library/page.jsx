@@ -1,10 +1,10 @@
 import React from 'react'
-import Discover from '../_components/Discover'
+import Resources from '../_components/Resources'
 
 function page() {
   return (
     <div className="flex items-center justify-center w-full">
-        <Discover />
+      <Resources />
     </div>
   )
 }

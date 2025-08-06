@@ -1,10 +1,5 @@
 import { Atom, Calculator, Eye, Telescope, Waves, Zap } from "lucide-react";
 import React from "react";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip"
 
 const courses = [
   {
