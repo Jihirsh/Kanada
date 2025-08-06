@@ -97,16 +97,19 @@ function Discover() {
           Explore Resources
         </Button>
       </div>
-      <h2 className="text-2xl font-bold text-gray-900 mb-4">
-        Discover Physics
-      </h2>
-      <p className="text-center text-gray-600 mb-8 max-w-2xl">
-        Choose your learning path and dive deep into the fascinating world of
-        physics. Each course is carefully structured to build your understanding
-        progressively.
-      </p>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="text-center mb-16">
+        <h2 className="text-4xl font-bold text-gray-900 mb-4">
+          Discover Physics
+        </h2>
+        <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+          Choose your learning path and dive deep into the fascinating world of
+          physics. Each course is carefully structured to build your
+          understanding progressively.
+        </p>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {courses.map((course) => (
           <Card
             key={course.id}
