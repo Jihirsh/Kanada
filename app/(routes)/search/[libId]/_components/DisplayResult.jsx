@@ -64,7 +64,7 @@ function DisplayResult({ searchInputRecord }) {
   };
 
   useEffect(() => {
-    GetSearchApiResult();
+    //searchInputRecord && GetSearchApiResult();
   }, [searchInputRecord]);
 
   return (
