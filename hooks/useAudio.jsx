@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { useEffect, useRef, useState } from "react";
 
 export const useAudio = () => {
@@ -7,11 +7,11 @@ export const useAudio = () => {
   const [isBackgroundPlaying, setIsBackgroundPlaying] = useState(false);
 
   useEffect(() => {
-    // Create completion sound audio element
+    // Completion sound audio element
     completionAudioRef.current = new Audio();
     completionAudioRef.current.preload = "auto";
 
-    // Create background music audio element
+    // Background music audio element
     backgroundAudioRef.current = new Audio();
     backgroundAudioRef.current.preload = "auto";
     backgroundAudioRef.current.loop = true;
@@ -31,40 +31,20 @@ export const useAudio = () => {
 
   const playCompletionSound = () => {
     if (completionAudioRef.current) {
-      // Using a simple beep sound data URL for completion
-      const audioContext = new AudioContext();
-      const oscillator = audioContext.createOscillator();
-      const gainNode = audioContext.createGain();
-
-      oscillator.connect(gainNode);
-      gainNode.connect(audioContext.destination);
-
-      oscillator.frequency.value = 800;
-      oscillator.type = "sine";
-
-      gainNode.gain.setValueAtTime(0, audioContext.currentTime);
-      gainNode.gain.linearRampToValueAtTime(
-        0.3,
-        audioContext.currentTime + 0.1
-      );
-      gainNode.gain.linearRampToValueAtTime(0, audioContext.currentTime + 0.5);
-
-      oscillator.start(audioContext.currentTime);
-      oscillator.stop(audioContext.currentTime + 0.5);
+      completionAudioRef.current.src = "/audio/completion.mp3";
+      completionAudioRef.current.play().catch((error) => console.error("Completion sound error:", error));
     }
   };
 
   const playBackgroundMusic = (type) => {
     if (backgroundAudioRef.current) {
-      // For demo purposes, we'll use placeholder URLs
-      // In a real app, you'd host these audio files or use a service
       const audioUrls = {
-        rain: "data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmwhDx2MzvrMbhsA",
-        lofi: "data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmwhDx2MzvrMbhsB",
+        rain: "/audio/rain.mp3",
+        lofi: "/audio/lofi.mp3",
       };
 
       backgroundAudioRef.current.src = audioUrls[type];
-      backgroundAudioRef.current.play().catch(console.error);
+      backgroundAudioRef.current.play().catch((error) => console.error("Background music error:", error));
       setIsBackgroundPlaying(true);
     }
   };
