@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
@@ -7,7 +7,6 @@ import { useAudio } from "@/hooks/useAudio";
 import { PomodoroSettings } from "./PomodoroSettings";
 
 const Pomodoro = () => {
-  // State declarations
   const [workDuration, setWorkDuration] = useState(25);
   const [shortBreakDuration, setShortBreakDuration] = useState(5);
   const [longBreakDuration, setLongBreakDuration] = useState(15);
@@ -20,24 +19,46 @@ const Pomodoro = () => {
   const [isActive, setIsActive] = useState(false);
   const [completedSessions, setCompletedSessions] = useState(0);
 
-  const { playCompletionSound, playBackgroundMusic, stopBackgroundMusic, isBackgroundPlaying } = useAudio();
+  const {
+    playCompletionSound,
+    playBackgroundMusic,
+    stopBackgroundMusic,
+    isBackgroundPlaying,
+  } = useAudio();
 
   const modes = {
-    work: { duration: workDuration * 60, label: "Focus Time", color: "bg-black" },
-    shortBreak: { duration: shortBreakDuration * 60, label: "Short Break", color: "bg-gray-700" },
-    longBreak: { duration: longBreakDuration * 60, label: "Long Break", color: "bg-gray-600" },
+    work: {
+      duration: workDuration * 60,
+      label: "Focus Time",
+      color: "bg-black",
+    },
+    shortBreak: {
+      duration: shortBreakDuration * 60,
+      label: "Short Break",
+      color: "bg-gray-700",
+    },
+    longBreak: {
+      duration: longBreakDuration * 60,
+      label: "Long Break",
+      color: "bg-gray-600",
+    },
   };
 
-  // Handle background music toggle and type change
+  //handles background music toggle and type change
   useEffect(() => {
     if (backgroundMusicEnabled) {
       playBackgroundMusic(backgroundMusicType);
     } else {
       stopBackgroundMusic();
     }
-  }, [backgroundMusicEnabled, backgroundMusicType, playBackgroundMusic, stopBackgroundMusic]);
+  }, [
+    backgroundMusicEnabled,
+    backgroundMusicType,
+    playBackgroundMusic,
+    stopBackgroundMusic,
+  ]);
 
-  // Timer logic
+  //timer logic
   useEffect(() => {
     let timer;
     if (isActive && timeLeft > 0) {
@@ -49,10 +70,16 @@ const Pomodoro = () => {
         playCompletionSound();
       }
       setCompletedSessions((prev) => prev + 1);
-      // Switch modes after completion
+      //switch modes after completion
       if (currentMode === "work") {
-        setCurrentMode(completedSessions % 4 === 3 ? "longBreak" : "shortBreak");
-        setTimeLeft(completedSessions % 4 === 3 ? longBreakDuration * 60 : shortBreakDuration * 60);
+        setCurrentMode(
+          completedSessions % 4 === 3 ? "longBreak" : "shortBreak"
+        );
+        setTimeLeft(
+          completedSessions % 4 === 3
+            ? longBreakDuration * 60
+            : shortBreakDuration * 60
+        );
       } else {
         setCurrentMode("work");
         setTimeLeft(workDuration * 60);
@@ -60,7 +87,17 @@ const Pomodoro = () => {
       setIsActive(false);
     }
     return () => clearInterval(timer);
-  }, [isActive, timeLeft, currentMode, completionSoundEnabled, playCompletionSound, completedSessions, workDuration, shortBreakDuration, longBreakDuration]);
+  }, [
+    isActive,
+    timeLeft,
+    currentMode,
+    completionSoundEnabled,
+    playCompletionSound,
+    completedSessions,
+    workDuration,
+    shortBreakDuration,
+    longBreakDuration,
+  ]);
 
   const switchMode = (mode) => {
     setCurrentMode(mode);
@@ -88,11 +125,20 @@ const Pomodoro = () => {
     return `${minutes}:${secs < 10 ? "0" : ""}${secs}`;
   };
 
+  useEffect(() => {
+    //synced timeLeft with new durations when not running
+    if (!isActive) {
+      if (currentMode === "work") setTimeLeft(workDuration * 60);
+      else if (currentMode === "shortBreak")
+        setTimeLeft(shortBreakDuration * 60);
+      else if (currentMode === "longBreak") setTimeLeft(longBreakDuration * 60);
+    }
+  }, [workDuration, shortBreakDuration, longBreakDuration, currentMode]);
+
   return (
     <div className="min-h-screen bg-white flex flex-col">
-
       <main className="flex-1 flex items-center justify-center px-4 py-16 relative">
-        {/* Settings Button - Top Right */}
+        {/* Settings Button */}
         <div className="absolute top-8 right-8 z-10">
           <PomodoroSettings
             workDuration={workDuration}
@@ -117,7 +163,9 @@ const Pomodoro = () => {
           <div className="mb-8">
             <div className="flex items-center justify-center mb-4">
               <Timer className="w-8 h-8 mr-3" />
-              <h1 className="text-3xl font-bold text-gray-900">Pomodoro Timer</h1>
+              <h1 className="text-3xl font-bold text-gray-900">
+                Pomodoro Timer
+              </h1>
             </div>
             <p className="text-gray-600">Stay focused and productive</p>
           </div>
@@ -127,7 +175,9 @@ const Pomodoro = () => {
             <button
               onClick={() => switchMode("work")}
               className={`flex-1 py-2 px-3 rounded-md text-sm font-medium transition-colors ${
-                currentMode === "work" ? "bg-black text-white" : "text-gray-700 hover:text-gray-900"
+                currentMode === "work"
+                  ? "bg-black text-white"
+                  : "text-gray-700 hover:text-gray-900"
               }`}
             >
               Focus ({workDuration}m)
@@ -135,7 +185,9 @@ const Pomodoro = () => {
             <button
               onClick={() => switchMode("shortBreak")}
               className={`flex-1 py-2 px-3 rounded-md text-sm font-medium transition-colors ${
-                currentMode === "shortBreak" ? "bg-black text-white" : "text-gray-700 hover:text-gray-900"
+                currentMode === "shortBreak"
+                  ? "bg-black text-white"
+                  : "text-gray-700 hover:text-gray-900"
               }`}
             >
               Short ({shortBreakDuration}m)
@@ -143,7 +195,9 @@ const Pomodoro = () => {
             <button
               onClick={() => switchMode("longBreak")}
               className={`flex-1 py-2 px-3 rounded-md text-sm font-medium transition-colors ${
-                currentMode === "longBreak" ? "bg-black text-white" : "text-gray-700 hover:text-gray-900"
+                currentMode === "longBreak"
+                  ? "bg-black text-white"
+                  : "text-gray-700 hover:text-gray-900"
               }`}
             >
               Long ({longBreakDuration}m)
@@ -158,13 +212,19 @@ const Pomodoro = () => {
                 <div
                   className="absolute inset-0 rounded-full border-8 border-black transition-all duration-1000 ease-linear"
                   style={{
-                    background: `conic-gradient(black ${getProgress() * 3.6}deg, transparent ${getProgress() * 3.6}deg)`,
+                    background: `conic-gradient(black ${
+                      getProgress() * 3.6
+                    }deg, transparent ${getProgress() * 3.6}deg)`,
                   }}
                 ></div>
                 <div className="absolute inset-4 bg-white rounded-full flex items-center justify-center">
                   <div className="text-center">
-                    <div className="text-4xl font-bold text-gray-900 mb-2">{formatTime(timeLeft)}</div>
-                    <div className="text-sm text-gray-600 uppercase tracking-wider">{modes[currentMode].label}</div>
+                    <div className="text-4xl font-bold text-gray-900 mb-2">
+                      {formatTime(timeLeft)}
+                    </div>
+                    <div className="text-sm text-gray-600 uppercase tracking-wider">
+                      {modes[currentMode].label}
+                    </div>
                   </div>
                 </div>
               </div>
@@ -178,12 +238,25 @@ const Pomodoro = () => {
 
           {/* Controls */}
           <div className="flex justify-center space-x-4 mb-8">
-            <Button onClick={toggleTimer} size="lg" className="flex items-center space-x-2">
-              {isActive ? <Pause className="w-5 h-5" /> : <Play className="w-5 h-5" />}
+            <Button
+              onClick={toggleTimer}
+              size="lg"
+              className="flex items-center space-x-2"
+            >
+              {isActive ? (
+                <Pause className="w-5 h-5" />
+              ) : (
+                <Play className="w-5 h-5" />
+              )}
               <span>{isActive ? "Pause" : "Start"}</span>
             </Button>
 
-            <Button onClick={resetTimer} variant="outline" size="lg" className="flex items-center space-x-2">
+            <Button
+              onClick={resetTimer}
+              variant="outline"
+              size="lg"
+              className="flex items-center space-x-2"
+            >
               <RotateCcw className="w-5 h-5" />
               <span>Reset</span>
             </Button>
@@ -193,11 +266,15 @@ const Pomodoro = () => {
           <div className="bg-gray-50 rounded-lg p-6">
             <div className="grid grid-cols-2 gap-4">
               <div className="text-center">
-                <div className="text-2xl font-bold text-gray-900">{completedSessions}</div>
+                <div className="text-2xl font-bold text-gray-900">
+                  {completedSessions}
+                </div>
                 <div className="text-sm text-gray-600">Completed Sessions</div>
               </div>
               <div className="text-center">
-                <div className="text-2xl font-bold text-gray-900">{Math.floor(completedSessions / 4)}</div>
+                <div className="text-2xl font-bold text-gray-900">
+                  {Math.floor(completedSessions / 4)}
+                </div>
                 <div className="text-sm text-gray-600">Full Cycles</div>
               </div>
             </div>

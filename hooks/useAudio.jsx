@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 
 export const useAudio = () => {
   const completionAudioRef = useRef(null);
@@ -29,14 +29,14 @@ export const useAudio = () => {
     };
   }, []);
 
-  const playCompletionSound = () => {
+  const playCompletionSound = useCallback(() => {
     if (completionAudioRef.current) {
       completionAudioRef.current.src = "/audio/completion.mp3";
       completionAudioRef.current.play().catch((error) => console.error("Completion sound error:", error));
     }
-  };
+  }, []);
 
-  const playBackgroundMusic = (type) => {
+  const playBackgroundMusic = useCallback((type) => {
     if (backgroundAudioRef.current) {
       const audioUrls = {
         rain: "/audio/rain.mp3",
@@ -47,15 +47,15 @@ export const useAudio = () => {
       backgroundAudioRef.current.play().catch((error) => console.error("Background music error:", error));
       setIsBackgroundPlaying(true);
     }
-  };
+  }, []);
 
-  const stopBackgroundMusic = () => {
+  const stopBackgroundMusic = useCallback(() => {
     if (backgroundAudioRef.current) {
       backgroundAudioRef.current.pause();
       backgroundAudioRef.current.currentTime = 0;
       setIsBackgroundPlaying(false);
     }
-  };
+  }, []);
 
   return {
     playCompletionSound,
