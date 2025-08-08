@@ -12,12 +12,12 @@ import {
 } from "@/components/ui/sidebar";
 import Image from "next/image";
 import {
-  AlarmClockCheck,
   Compass,
   DraftingCompass,
-  LibraryBig,
+  Library,
   Orbit,
   PenSquare,
+  Timer,
 } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
@@ -36,7 +36,7 @@ const MenuOptions = [
   },
   {
     title: "Library",
-    icon: LibraryBig,
+    icon: Library,
     path: "/library",
   },
   {
@@ -46,7 +46,7 @@ const MenuOptions = [
   },
   {
     title: "Pomodoro",
-    icon: AlarmClockCheck,
+    icon: Timer,
     path: "/pomodoro",
   },
 ];
@@ -71,7 +71,7 @@ function AppSidebar() {
                     className={`p-4 py-6 hover:bg-transparent hover:font-medium 
                     ${path?.includes(menu.path) && "font-semibold"}`}
                   >
-                    <a href={menu.path} className="">
+                    <a href={menu.path} className="flex items-center space-x-3 px-3 py-2 text-gray-700 hover:text-black hover:bg-gray-100 rounded-lg transition-colors">
                       <menu.icon className="h-8 w-8" />
                       <span className="text-lg">{menu.title}</span>
                     </a>
