@@ -65,7 +65,7 @@ function ChatInputBox() {
             <TabsContent value="Research">
               <input
                 type="text"
-                placeholder="Research Anything"
+                placeholder="Responds in a way to help you learn"
                 className="w-full p-4 outline-none"
                 onChange={(e) => setUserSearchInput(e.target.value)}
               />
