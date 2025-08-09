@@ -47,7 +47,7 @@ export async function POST(req) {
               { status: 429 }
             );
           }
-          const delay = baseDelay * Math.pow(2, attempts); // Exponential backoff
+          const delay = baseDelay * Math.pow(2, attempts);
           await sleep(delay);
           continue;
         }
@@ -71,7 +71,7 @@ export async function POST(req) {
           await sleep(delay);
           continue;
         }
-        throw error; // Rethrow other errors
+        throw error;
       }
     }
   } catch (error) {
