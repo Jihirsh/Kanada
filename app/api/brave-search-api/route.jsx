@@ -1,13 +1,11 @@
 import { NextResponse } from "next/server";
 
-// Utility function for exponential backoff
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 export async function POST(req) {
   try {
     const { searchInput, searchType } = await req.json();
 
-    // Validate inputs
     if (!searchInput) {
       return NextResponse.json(
         { error: "Search input is required" },
@@ -21,15 +19,16 @@ export async function POST(req) {
       );
     }
 
-    // Retry logic for Brave Search API
     let attempts = 0;
     const maxAttempts = 3;
-    const baseDelay = 1000; // 1 second
+    const baseDelay = 1000;
 
     while (attempts < maxAttempts) {
       try {
         const response = await fetch(
-          `https://api.search.brave.com/res/v1/${searchType}/search?q=${encodeURIComponent(searchInput)}&count=5`,
+          `https://api.search.brave.com/res/v1/${searchType}/search?q=${encodeURIComponent(
+            searchInput
+          )}&count=6`,
           {
             headers: {
               Accept: "application/json",
@@ -57,6 +56,8 @@ export async function POST(req) {
         }
 
         const data = await response.json();
+        //api response in string for copy pasting
+        console.log("BRAVE API RESULT STRING:", JSON.stringify(data, null, 2));
         return NextResponse.json(data, { status: 200 });
       } catch (error) {
         if (error.message.includes("HTTP error! status: 429")) {
