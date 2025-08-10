@@ -14,7 +14,7 @@ function SearchQueryResult() {
   }, [libId, searchParams]);
 
   const GetSearchQueryRecord = () => {
-    const searchInput = libId ? decodeURIComponent(libId).replace(/\+/g, " ") : "";
+    const searchInput = libId ? decodeURIComponent(libId) : "";
     const type = searchParams.get("type") || "web";
     if (searchInput) {
       setSearchInputRecord({ searchInput, type });

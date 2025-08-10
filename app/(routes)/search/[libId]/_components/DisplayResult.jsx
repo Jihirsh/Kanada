@@ -5,7 +5,9 @@ import {
   LucideSparkles,
   LucideVideo,
 } from "lucide-react";
-import AnswerDisplay from "./AnswerDisplay";
+import WebResultsDisplay from "./WebResultsDisplay";
+import ImagesResultsDisplay from "./ImagesResultsDisplay";
+import VideosResultsDisplay from "./VideosResultsDisplay";
 import PropTypes from "prop-types";
 
 const braveSearchTypeMap = {
@@ -40,7 +42,7 @@ function DisplayResult({ searchInputRecord }) {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          searchInput: localStorage.getItem('kanadaProjectQuery'),
+          searchInput: searchInputRecord.searchInput,
           searchType: type,
         }),
       });
@@ -93,87 +95,46 @@ function DisplayResult({ searchInputRecord }) {
       <div className="mt-4">
         {isLoading && <p>Loading...</p>}
         {error && <p className="text-red-500">{error}</p>}
-        {activeTab === "Answer" && searchResult && (
-          <AnswerDisplay searchResult={searchResult} />
-        )}
-        {activeTab === "Images" && (
-          <div>
-            {searchResult?.results?.length > 0 ? (
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                {searchResult.results.map((img, i) => (
-                  <a
-                    key={i}
-                    href={img.url || img.source}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <img
-                      src={img.thumbnailUrl || img.image || img.url}
-                      alt={img.title || "Result"}
-                      className="rounded shadow"
-                    />
-                  </a>
-                ))}
+        {!isLoading && !error && searchResult && (
+          <>
+            {activeTab === "Answer" && (
+              <WebResultsDisplay searchResult={searchResult} />
+            )}
+            {activeTab === "Images" && (
+              <ImagesResultsDisplay searchResult={searchResult} />
+            )}
+            {activeTab === "Videos" && (
+              <VideosResultsDisplay searchResult={searchResult} />
+            )}
+            {activeTab === "Sources" && (
+              <div>
+                {searchResult?.results?.length > 0 ? (
+                  <ul className="list-disc ml-5">
+                    {searchResult.results.map((src, i) => (
+                      <li key={i}>
+                        <a
+                          href={src.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-blue-600 underline"
+                        >
+                          {src.title || src.url}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <div>No sources found.</div>
+                )}
               </div>
-            ) : (
-              <div>No images found.</div>
             )}
-          </div>
-        )}
-        {activeTab === "Videos" && (
-          <div>
-            {searchResult?.results?.length > 0 ? (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {searchResult.results.map((vid, i) => (
-                  <a
-                    key={i}
-                    href={vid.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <div className="flex flex-col items-start">
-                      <img
-                        src={vid.thumbnailUrl}
-                        alt={vid.title}
-                        className="rounded shadow mb-2"
-                      />
-                      <div className="font-medium">{vid.title}</div>
-                      <div className="text-xs text-gray-500">{vid.source}</div>
-                    </div>
-                  </a>
-                ))}
-              </div>
-            ) : (
-              <div>No videos found.</div>
-            )}
-          </div>
-        )}
-        {activeTab === "Sources" && (
-          <div>
-            {searchResult?.results?.length > 0 ? (
-              <ul className="list-disc ml-5">
-                {searchResult.results.map((src, i) => (
-                  <li key={i}>
-                    <a
-                      href={src.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-blue-600 underline"
-                    >
-                      {src.title || src.url}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            ) : (
-              <div>No sources found.</div>
-            )}
-          </div>
+          </>
         )}
       </div>
     </div>
   );
 }
+
 
 DisplayResult.propTypes = {
   searchInputRecord: PropTypes.shape({
