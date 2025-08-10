@@ -40,7 +40,7 @@ function DisplayResult({ searchInputRecord }) {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          searchInput: input,
+          searchInput: localStorage.getItem('kanadaProjectQuery'),
           searchType: type,
         }),
       });
@@ -62,8 +62,9 @@ function DisplayResult({ searchInputRecord }) {
   useEffect(() => {
     if (searchInputRecord && searchInputRecord.searchInput) {
       const braveType = braveSearchTypeMap[activeTab];
+      console.log(braveType)
       if (braveType) {
-        // GetSearchApiResult(searchInputRecord.searchInput, braveType);
+        GetSearchApiResult(searchInputRecord.searchInput, braveType);
       }
     }
   }, [searchInputRecord, activeTab]);

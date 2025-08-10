@@ -34,7 +34,7 @@ function ChatInputBox() {
     setLoading(true);
     const libId = uuidv4();
     setLoading(false);
-
+    localStorage.setItem('kanadaProjectQuery',userSearchInput)
     router.push("/search/" + libId);
   };
 
