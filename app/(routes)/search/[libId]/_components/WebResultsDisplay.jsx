@@ -31,7 +31,10 @@ function WebResultsDisplay({ searchResult }) {
             </h2>
           </div>
           <h2 className="font-semibold text-xs mb-1">{item?.title}</h2>
-          <p className="line-clamp-2 text-black text-xs">{item?.description}</p>
+          <p
+            className="line-clamp-2 text-black text-xs"
+            dangerouslySetInnerHTML={{ __html: item?.description || "" }}
+          />
         </div>
       ))}
     </div>

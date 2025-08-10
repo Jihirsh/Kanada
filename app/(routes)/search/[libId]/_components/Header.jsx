@@ -20,7 +20,7 @@ function Header({ searchInputRecord }) {
         </div>
       </div>
 
-      <h2 className="line-clamp-1">{searchInputRecord?.searchInput}</h2>
+      <h2 className="line-clamp-1 font-semibold">{searchInputRecord?.searchInput}</h2>
 
       <div className="flex gap-3">
         <Button>
