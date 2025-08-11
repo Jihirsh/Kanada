@@ -24,6 +24,30 @@ const tabs = [
   { label: "Sources", icon: LucideList },
 ];
 
+function formatWebResults(searchResp) {
+  if (!searchResp?.web?.results) return [];
+  return searchResp.web.results.map((item) => ({
+    title: item?.title,
+    description: item?.description,
+    long_name: item?.profile?.long_name,
+    img: item?.profile?.img,
+    url: item?.url,
+    thumbnail: item?.thumbnail?.src,
+  }));
+}
+
+async function GenerateAIResp(formattedSearchResp, recordId) {
+  const result = await fetch("/api/llm-model", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      searchResult: formattedSearchResp,
+      recordId,
+    }),
+  });
+  return result.json();
+}
+
 function DisplayResult({ searchInputRecord }) {
   const [activeTab, setActiveTab] = useState("Answer");
   const [searchResult, setSearchResult] = useState(null);
@@ -48,12 +72,24 @@ function DisplayResult({ searchInputRecord }) {
       });
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.details || `HTTP error! status: ${response.status}`);
+        throw new Error(
+          errorData.details || `HTTP error! status: ${response.status}`
+        );
       }
       const data = await response.json();
       setSearchResult(data);
       console.log("API Response:", data);
       console.log("Stringified Response:", JSON.stringify(data));
+
+      if (type === "web") {
+        const formattedSearchResp = formatWebResults(data);
+        const recordId = "local-" + Date.now();
+        GenerateAIResp(formattedSearchResp, recordId)
+          .then((resp) => console.log("AI Resp:", resp))
+          .catch((err) => console.error("AI Error:", err));
+      }
+
+      
     } catch (err) {
       setError(err.message || "Failed to fetch search results");
     } finally {
@@ -64,7 +100,7 @@ function DisplayResult({ searchInputRecord }) {
   useEffect(() => {
     if (searchInputRecord && searchInputRecord.searchInput) {
       const braveType = braveSearchTypeMap[activeTab];
-      console.log(braveType)
+      console.log(braveType);
       if (braveType) {
         GetSearchApiResult(searchInputRecord.searchInput, braveType);
       }
@@ -73,7 +109,7 @@ function DisplayResult({ searchInputRecord }) {
 
   return (
     <div className="mt-7">
-      <h2 className="font-medium text-3xl line-clamp-2 mb-2">Responses</h2>
+      <h2 className="font-medium text-3xl line-clamp-2 mb-2">{searchInputRecord?.searchInput}</h2>
       <div className="flex items-center space-x-6 border-b border-gray-200 pb-2 mt-6">
         {tabs.map(({ label, icon: Icon }) => (
           <button
@@ -134,7 +170,6 @@ function DisplayResult({ searchInputRecord }) {
     </div>
   );
 }
-
 
 DisplayResult.propTypes = {
   searchInputRecord: PropTypes.shape({
