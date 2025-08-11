@@ -36,11 +36,12 @@ function formatWebResults(searchResp) {
   }));
 }
 
-async function GenerateAIResp(formattedSearchResp, recordId) {
+async function GenerateAIResp(formattedSearchResp, recordId, searchInput) {
   const result = await fetch("/api/llm-model", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
+      searchInput,
       searchResult: formattedSearchResp,
       recordId,
     }),
@@ -81,15 +82,14 @@ function DisplayResult({ searchInputRecord }) {
       console.log("API Response:", data);
       console.log("Stringified Response:", JSON.stringify(data));
 
+      //Inngest code
       if (type === "web") {
         const formattedSearchResp = formatWebResults(data);
         const recordId = "local-" + Date.now();
-        GenerateAIResp(formattedSearchResp, recordId)
+        GenerateAIResp(formattedSearchResp, recordId, searchInputRecord.searchInput)
           .then((resp) => console.log("AI Resp:", resp))
           .catch((err) => console.error("AI Error:", err));
       }
-
-      
     } catch (err) {
       setError(err.message || "Failed to fetch search results");
     } finally {
@@ -102,14 +102,16 @@ function DisplayResult({ searchInputRecord }) {
       const braveType = braveSearchTypeMap[activeTab];
       console.log(braveType);
       if (braveType) {
-        GetSearchApiResult(searchInputRecord.searchInput, braveType);
+        //GetSearchApiResult(searchInputRecord.searchInput, braveType);
       }
     }
   }, [searchInputRecord, activeTab]);
 
   return (
     <div className="mt-7">
-      <h2 className="font-medium text-3xl line-clamp-2 mb-2">{searchInputRecord?.searchInput}</h2>
+      <h2 className="font-medium text-3xl line-clamp-2 mb-2">
+        {searchInputRecord?.searchInput}
+      </h2>
       <div className="flex items-center space-x-6 border-b border-gray-200 pb-2 mt-6">
         {tabs.map(({ label, icon: Icon }) => (
           <button
