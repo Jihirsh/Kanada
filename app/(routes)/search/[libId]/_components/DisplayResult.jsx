@@ -185,3 +185,4 @@ DisplayResult.propTypes = {
 };
 
 export default DisplayResult;
+
