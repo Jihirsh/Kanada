@@ -102,7 +102,7 @@ function DisplayResult({ searchInputRecord }) {
       const braveType = braveSearchTypeMap[activeTab];
       console.log(braveType);
       if (braveType) {
-        //GetSearchApiResult(searchInputRecord.searchInput, braveType);
+        GetSearchApiResult(searchInputRecord.searchInput, braveType);
       }
     }
   }, [searchInputRecord, activeTab]);
