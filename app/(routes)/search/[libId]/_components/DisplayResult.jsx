@@ -86,7 +86,11 @@ function DisplayResult({ searchInputRecord }) {
       if (type === "web") {
         const formattedSearchResp = formatWebResults(data);
         const recordId = "local-" + Date.now();
-        GenerateAIResp(formattedSearchResp, recordId, searchInputRecord.searchInput)
+        GenerateAIResp(
+          formattedSearchResp,
+          recordId,
+          searchInputRecord.searchInput
+        )
           .then((resp) => console.log("AI Resp:", resp))
           .catch((err) => console.error("AI Error:", err));
       }
