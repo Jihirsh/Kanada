@@ -85,4 +85,4 @@ graph TD
 ---
 
 
-*Made with ❤️ for productivity and  lear
+*Made with ❤️ for Physics <3
