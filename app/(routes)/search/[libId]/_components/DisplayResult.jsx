@@ -9,6 +9,8 @@ import WebResultsDisplay from "./WebResultsDisplay";
 import ImagesResultsDisplay from "./ImagesResultsDisplay";
 import VideosResultsDisplay from "./VideosResultsDisplay";
 import PropTypes from "prop-types";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 const braveSearchTypeMap = {
   Answer: "web",
@@ -53,6 +55,7 @@ function DisplayResult({ searchInputRecord }) {
   const [searchResult, setSearchResult] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [aiResponse, setAIResponse] = useState(null);
 
   const GetSearchApiResult = async (input, type) => {
     if (!input || !type) {
@@ -85,11 +88,12 @@ function DisplayResult({ searchInputRecord }) {
         const formattedSearchResp = formatWebResults(data);
         const recordId = "local-" + Date.now();
         GenerateAIResp(formattedSearchResp, recordId)
-          .then((resp) => console.log("AI Resp:", resp))
+          .then((resp) => {
+            console.log("AI Resp:", resp);
+            setAIResponse(resp.output); // save AI response in state
+          })
           .catch((err) => console.error("AI Error:", err));
       }
-
-      
     } catch (err) {
       setError(err.message || "Failed to fetch search results");
     } finally {
@@ -109,7 +113,9 @@ function DisplayResult({ searchInputRecord }) {
 
   return (
     <div className="mt-7">
-      <h2 className="font-medium text-3xl line-clamp-2 mb-2">{searchInputRecord?.searchInput}</h2>
+      <h2 className="font-medium text-3xl line-clamp-2 mb-2">
+        {searchInputRecord?.searchInput}
+      </h2>
       <div className="flex items-center space-x-6 border-b border-gray-200 pb-2 mt-6">
         {tabs.map(({ label, icon: Icon }) => (
           <button
@@ -165,6 +171,30 @@ function DisplayResult({ searchInputRecord }) {
               </div>
             )}
           </>
+        )}
+        {!isLoading && !error && aiResponse && (
+          <div className="mt-6 p-4 border rounded bg-gray-50 prose">
+            <h3 className="font-semibold text-lg mb-2">AI Summary:</h3>
+            <ReactMarkdown
+              remarkPlugins={[remarkGfm]}
+              components={{
+                h1: ({ node, ...props }) => (
+                  <h1 className="text-2xl font-bold my-2" {...props} />
+                ),
+                h2: ({ node, ...props }) => (
+                  <h2 className="text-xl font-semibold my-1" {...props} />
+                ),
+                strong: ({ node, ...props }) => (
+                  <strong className="font-bold" {...props} />
+                ),
+                a: ({ node, ...props }) => (
+                  <a className="text-blue-600 underline" {...props} />
+                ),
+              }}
+            >
+              {aiResponse}
+            </ReactMarkdown>
+          </div>
         )}
       </div>
     </div>

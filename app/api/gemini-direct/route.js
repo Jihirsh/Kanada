@@ -5,13 +5,6 @@ export async function POST(req) {
   try {
     const { searchInput, searchResult } = await req.json();
 
-    if (!searchInput) {
-      return NextResponse.json(
-        { error: "Missing search input" },
-        { status: 400 }
-      );
-    }
-
     //initialize the gemini client
     const ai = new GoogleGenAI({
       apiKey: process.env.GEMINI_API_KEY,
