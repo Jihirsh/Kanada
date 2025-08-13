@@ -48,7 +48,7 @@ kanada/
 
 ## Architecture Diagram
 
-![alt text](image.png)
+![alt text](/public/image.png)
 
 ---
 
