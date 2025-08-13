@@ -1,3 +1,4 @@
+import { Analytics } from '@vercel/analytics/next';
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
@@ -29,6 +30,7 @@ export default function RootLayout({ children }) {
           <AppSidebar />
           <SidebarTrigger />
           {children}
+          <Analytics />
         </SidebarProvider>
       </body>
     </html>
