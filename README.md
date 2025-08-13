@@ -1,36 +1,88 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Kanada
 
-## Getting Started
+Kanada is a productivity and research web application designed to help users focus, learn, and discover.  
+**Version 1** features a Pomodoro timer and advanced search powered by Brave Search and Gemini AI.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## Features
+
+- **Pomodoro Timer:**  
+  Stay productive with a built-in Pomodoro timer and customizable settings (rain & lofi background music).
+
+- **Brave Search Integration:**  
+  Search the web, images, and videos using the Brave Search API.
+
+- **Gemini AI Summaries:**  
+  Get AI-generated summaries and answers for your search queries.
+
+- **Discover Physics:**  
+  Explore curated physics topics and resources.
+
+---
+
+## Project Structure
+
+```
+kanada/
+├── app/
+│   ├── _components/           # Shared React components (Pomodoro, Sidebar, etc.)
+│   ├── (routes)/              # Route-specific components and pages
+│   │   └── search/            # Search feature and API endpoints
+│   ├── api/                   # API route handlers (Brave, Gemini, etc.)
+│   ├── discover/              # Physics discovery pages
+│   ├── library/               # Library/resource pages
+│   └── pomodoro/              # Pomodoro timer page
+├── components/                # UI primitives (buttons, cards, etc.)
+├── hooks/                     # Custom React hooks
+├── inngest/                   # Background jobs and event functions
+├── lib/                       # Utility functions
+├── public/                    # Static assets (images, audio)
+├── services/                  # Shared service logic
+├── next.config.mjs            # Next.js configuration
+├── package.json               # Project metadata and scripts
+└── README.md                  # Project documentation
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## Architecture Diagram
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```mermaid
+graph TD
+    A[User Interface (React/Next.js)]
+    B[App Components]
+    C[API Routes (Next.js)]
+    D[Brave Search API]
+    E[Gemini AI API]
+    F[Pomodoro Timer Logic]
+    G[Physics Discover Guides]
+    H[Shared UI Components]
+    I[Custom Hooks]
+    J[Static Assets]
 
-## Learn More
+    A --> B
+    B --> H
+    B --> F
+    B --> G
+    B --> C
+    B --> I
+    B --> J
+    C --> D
+    C --> E
+```
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Roadmap
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Version 2 (Coming Soon)
+- User Login/Signup
+- Mobile-friendly responsive design
+- Improved AI answers and summaries
+- More physics discovery guides and resources
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+*Made with ❤️ for productivity and  lear
