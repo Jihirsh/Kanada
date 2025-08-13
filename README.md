@@ -48,29 +48,7 @@ kanada/
 
 ## Architecture Diagram
 
-```mermaid
-graph TD
-    A[User Interface (React/Next.js)]
-    B[App Components]
-    C[API Routes (Next.js)]
-    D[Brave Search API]
-    E[Gemini AI API]
-    F[Pomodoro Timer Logic]
-    G[Physics Discover Guides]
-    H[Shared UI Components]
-    I[Custom Hooks]
-    J[Static Assets]
-
-    A --> B
-    B --> H
-    B --> F
-    B --> G
-    B --> C
-    B --> I
-    B --> J
-    C --> D
-    C --> E
-```
+![alt text](image.png)
 
 ---
 
