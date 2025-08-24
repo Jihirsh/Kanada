@@ -22,6 +22,7 @@ import {
 import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { ModeToggle } from "@/components/theme-btn";
 
 const MenuOptions = [
   {
@@ -71,7 +72,10 @@ function AppSidebar() {
                     className={`p-4 py-6 hover:bg-transparent hover:font-medium 
                     ${path?.includes(menu.path) && "font-semibold"}`}
                   >
-                    <a href={menu.path} className="flex items-center space-x-3 px-3 py-2 text-gray-700 hover:text-black hover:bg-gray-100 rounded-lg transition-colors">
+                    <a
+                      href={menu.path}
+                      className="flex items-center space-x-3 px-3 py-2 text-gray-700 hover:text-black hover:bg-gray-100 rounded-lg transition-colors"
+                    >
                       <menu.icon className="h-8 w-8" />
                       <span className="text-lg">{menu.title}</span>
                     </a>
@@ -88,10 +92,15 @@ function AppSidebar() {
         <SidebarGroup />
       </SidebarContent>
       <SidebarFooter className="bg-accent">
-        <Avatar>
-          <AvatarImage src="https://github.com/shadcn.png" />
-          <AvatarFallback>CN</AvatarFallback>
-        </Avatar>
+        <div className="flex items-center justify-between">
+          <Avatar>
+            <AvatarImage src="https://github.com/shadcn.png" />
+            <AvatarFallback>CN</AvatarFallback>
+          </Avatar>
+          <div className="group-data-[collapsible=icon]:hidden">
+            <ModeToggle />
+          </div>
+        </div>
       </SidebarFooter>
     </Sidebar>
   );
